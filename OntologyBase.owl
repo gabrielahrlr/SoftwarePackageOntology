@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY swrl "http://www.w3.org/2003/11/swrl#" >
+    <!ENTITY swrlb "http://www.w3.org/2003/11/swrlb#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ontomer "http://www.semanticweb.org/ontomer.owl#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/ontomer.owl#"
+     xml:base="http://www.semanticweb.org/ontomer.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:ontomer="http://www.semanticweb.org/ontomer.owl#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ontomer.owl"/>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Conflicts -->
+
+    <owl:ObjectProperty rdf:about="&ontomer;Conflicts">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+        <rdfs:range rdf:resource="&ontomer;Package"/>
+    </owl:ObjectProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Dependency -->
+
+    <owl:ObjectProperty rdf:about="&ontomer;Dependency"/>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Depends -->
+
+    <owl:ObjectProperty rdf:about="&ontomer;Depends">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <owl:inverseOf rdf:resource="&ontomer;Dependency"/>
+        <rdfs:range rdf:resource="&ontomer;Package"/>
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+    </owl:ObjectProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Recommends -->
+
+    <owl:ObjectProperty rdf:about="&ontomer;Recommends">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range rdf:resource="&ontomer;Package"/>
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+    </owl:ObjectProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Suggests -->
+
+    <owl:ObjectProperty rdf:about="&ontomer;Suggests">
+        <rdfs:range rdf:resource="&ontomer;Package"/>
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+    </owl:ObjectProperty>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Architecture -->
+
+    <owl:DatatypeProperty rdf:about="&ontomer;Architecture">
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Description -->
+
+    <owl:DatatypeProperty rdf:about="&ontomer;Description">
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Maintainer -->
+
+    <owl:DatatypeProperty rdf:about="&ontomer;Maintainer">
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Manager -->
+
+    <owl:DatatypeProperty rdf:about="&ontomer;Manager">
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Package -->
+
+    <owl:DatatypeProperty rdf:about="&ontomer;Package">
+        <rdfs:domain rdf:resource="&ontomer;Package"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#DebianMaintainerPackage -->
+
+    <owl:Class rdf:about="&ontomer;DebianMaintainerPackage">
+        <rdfs:subClassOf rdf:resource="&ontomer;Package"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#DebianPackage -->
+
+    <owl:Class rdf:about="&ontomer;DebianPackage">
+        <rdfs:subClassOf rdf:resource="&ontomer;Package"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&ontomer;Depends"/>
+                <owl:allValuesFrom rdf:resource="&ontomer;DebianPackage"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&ontomer;Recommends"/>
+                <owl:allValuesFrom rdf:resource="&ontomer;DebianPackage"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#Package -->
+
+    <owl:Class rdf:about="&ontomer;Package"/>
+
+
+
+    <!-- http://www.semanticweb.org/ontomer.owl#WindowManagerPackage -->
+
+    <owl:Class rdf:about="&ontomer;WindowManagerPackage">
+        <rdfs:subClassOf rdf:resource="&ontomer;Package"/>
+    </owl:Class>
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Rules
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+ <swrl:Variable rdf:about="urn:swrl#p"/>
+    <swrl:Variable rdf:about="urn:swrl#s"/>
+    <swrl:Imp>
+        <swrl:head>
+            <swrl:AtomList>
+                <rdf:rest rdf:resource="&rdf;nil"/>
+                <rdf:first>
+                    <swrl:ClassAtom>
+                        <swrl:classPredicate rdf:resource="&ontomer;DebianMaintainerPackage"/>
+                        <swrl:argument1 rdf:resource="urn:swrl#p"/>
+                    </swrl:ClassAtom>
+                </rdf:first>
+            </swrl:AtomList>
+        </swrl:head>
+        <swrl:body>
+            <swrl:AtomList>
+                <rdf:first>
+                    <swrl:ClassAtom>
+                        <swrl:classPredicate rdf:resource="&ontomer;Package"/>
+                        <swrl:argument1 rdf:resource="urn:swrl#p"/>
+                    </swrl:ClassAtom>
+                </rdf:first>
+                <rdf:rest>
+                    <swrl:AtomList>
+                        <rdf:first>
+                            <swrl:DatavaluedPropertyAtom>
+                                <swrl:propertyPredicate rdf:resource="&ontomer;Maintainer"/>
+                                <swrl:argument1 rdf:resource="urn:swrl#p"/>
+                                <swrl:argument2 rdf:resource="urn:swrl#s"/>
+                            </swrl:DatavaluedPropertyAtom>
+                        </rdf:first>
+                        <rdf:rest>
+                            <swrl:AtomList>
+                                <rdf:rest rdf:resource="&rdf;nil"/>
+                                <rdf:first>
+                                    <swrl:BuiltinAtom>
+                                        <swrl:builtin rdf:resource="&swrlb;contains"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="&rdf;List"/>
+                                                <rdf:first rdf:resource="urn:swrl#s"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="&rdf;List"/>
+                                                        <rdf:first>Debian Community Maintainer</rdf:first>
+                                                        <rdf:rest rdf:resource="&rdf;nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </swrl:BuiltinAtom>
+                                </rdf:first>
+                            </swrl:AtomList>
+                        </rdf:rest>
+                    </swrl:AtomList>
+                </rdf:rest>
+            </swrl:AtomList>
+        </swrl:body>
+    </swrl:Imp>
+    <swrl:Imp>
+        <swrl:head>
+            <swrl:AtomList>
+                <rdf:rest rdf:resource="&rdf;nil"/>
+                <rdf:first>
+                    <swrl:ClassAtom>
+                        <swrl:classPredicate rdf:resource="&ontomer;WindowManagerPackage"/>
+                        <swrl:argument1 rdf:resource="urn:swrl#p"/>
+                    </swrl:ClassAtom>
+                </rdf:first>
+            </swrl:AtomList>
+        </swrl:head>
+        <swrl:body>
+            <swrl:AtomList>
+                <rdf:first>
+                    <swrl:ClassAtom>
+                        <swrl:classPredicate rdf:resource="&ontomer;Package"/>
+                        <swrl:argument1 rdf:resource="urn:swrl#p"/>
+                    </swrl:ClassAtom>
+                </rdf:first>
+                <rdf:rest>
+                    <swrl:AtomList>
+                        <rdf:rest>
+                            <swrl:AtomList>
+                                <rdf:rest rdf:resource="&rdf;nil"/>
+                                <rdf:first>
+                                    <swrl:BuiltinAtom>
+                                        <swrl:builtin rdf:resource="&swrlb;contains"/>
+                                        <swrl:arguments>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="&rdf;List"/>
+                                                <rdf:first rdf:resource="urn:swrl#s"/>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="&rdf;List"/>
+                                                        <rdf:first>Window Manager</rdf:first>
+                                                        <rdf:rest rdf:resource="&rdf;nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </swrl:arguments>
+                                    </swrl:BuiltinAtom>
+                                </rdf:first>
+                            </swrl:AtomList>
+                        </rdf:rest>
+                        <rdf:first>
+                            <swrl:DatavaluedPropertyAtom>
+                                <swrl:propertyPredicate rdf:resource="&ontomer;Manager"/>
+                                <swrl:argument1 rdf:resource="urn:swrl#p"/>
+                                <swrl:argument2 rdf:resource="urn:swrl#s"/>
+                            </swrl:DatavaluedPropertyAtom>
+                        </rdf:first>
+                    </swrl:AtomList>
+                </rdf:rest>
+            </swrl:AtomList>
+        </swrl:body>
+    </swrl:Imp>
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
